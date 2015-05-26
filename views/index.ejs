@@ -1,11 +1,35 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<title>chat</title>
+	<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="chat-container fullh">
+	<div class="chat-group-container plr15 fullh">
+		<h1 class="logo">Web Chat</h1>
+		<dl class="chat-group user-group">
+			<dt><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 好友列表</b></dt>
+			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
+			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
+			<dd class="clearfix"><a class="chat-to status-leave fl" href="#"><img src="https://avatars2.githubusercontent.com/u/36107?v=3&s=40" alt="">user1</a></dd>
+			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
+			<dd class="clearfix"><a class="chat-to status-leave fl" href="#"><img src="" alt="">user1</a></dd>
+		</dl>
+		<dl class="chat-group">
+			<dt><b><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 房间列表</b></dt>
+			<dd class="clearfix"><a class="chat-to fl" href="#">room1</a><span class="chat-status status-busy fr">12</span></dd>
+		</dl>
+	</div>
+	<div class="chat-content fullwh">
+		<div class="chat-content-inner p20">
+			<p>111</p>
+			<p>111</p>
+			<p>111</p>
+		</div>
+	</div>
+</div>
+</body>
 </html>

@@ -1,0 +1,21 @@
+{
+  "name": "webChat",
+  "version": "0.0.1",
+  "homepage": "https://github.com/hoozi/webChat",
+  "authors": [
+    "hoozi <287036406@qq.com>"
+  ],
+  "description": "express+mongodb+socket.io for chat",
+  "keywords": [
+    "web",
+    "chat"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

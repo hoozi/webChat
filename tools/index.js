@@ -6,7 +6,7 @@
  * @version : 0.0.1
  */
 var bcrypt = require("bcrypt-nodejs");
-
+var salt = bcrypt.genSaltSync(10)
 /**
  * 主要用于用户的password加密
  *
@@ -15,7 +15,7 @@ var bcrypt = require("bcrypt-nodejs");
  * @retrun {function} bcrypt.hash
  */
 exports.bHash = function(str,cb) {
-	return bcrypt.hash(str,"hoozi_chat",cb)
+	return bcrypt.hash(str,salt,null,cb)
 }
 
 /**

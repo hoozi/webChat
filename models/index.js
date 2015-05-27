@@ -14,3 +14,4 @@ require('./room')
 
 exports.user = mongoose.model('user');
 exports.room = mongoose.model('room');
+//exports.session = mongoose.Collection('session');

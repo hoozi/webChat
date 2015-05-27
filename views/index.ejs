@@ -9,9 +9,21 @@
 <body>
 <div class="chat-container fullh">
 	<div class="chat-group-container plr15 fullh">
+		<% if(user) {%>
+		<div class="user-card">
+			<h3 class="user-card-head"><%= user.userName %>的信息</h3>
+			<div class="user-card-body">
+				<img src="/images/agent.jpg" alt="" class="user-face">
+				<b class="user-name"><%= user.userName %></b>
+				<span>|</span>
+				<a href="/user/signout">退出</a>
+			</div>
+		</div>
+		<% }else { %>
 		<h1 class="logo">Web Chat</h1>
+		<%}%>
 		<dl class="chat-group user-group">
-			<dt><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 好友列表</b></dt>
+			<dt><b>好友列表</b></dt>
 			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
 			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
 			<dd class="clearfix"><a class="chat-to status-leave fl" href="#"><img src="https://avatars2.githubusercontent.com/u/36107?v=3&s=40" alt="">user1</a></dd>
@@ -19,7 +31,7 @@
 			<dd class="clearfix"><a class="chat-to status-leave fl" href="#"><img src="" alt="">user1</a></dd>
 		</dl>
 		<dl class="chat-group">
-			<dt><b><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 房间列表</b></dt>
+			<dt><b>房间列表</b></dt>
 			<dd class="clearfix"><a class="chat-to fl" href="#">room1</a><span class="chat-status status-busy fr">12</span></dd>
 		</dl>
 	</div>

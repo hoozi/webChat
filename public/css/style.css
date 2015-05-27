@@ -38,7 +38,7 @@ input:-moz-placeholder { color: #ccc; }
 .chat-container{position:relative;padding-left:300px;}
 .chat-group-container{width:270px;position:fixed;left:0;top:0;-webkit-box-shadow:1px 0 4px rgba(0,0,0,0.1);background-color:#fff}
 .chat-group-container .logo{padding:30px 0;text-align:center;font-family:'Lucida Grande','Trebuchet MS','Hiragino Sans GB','Segoe UI Light','Segoe UI','Microsoft Jhenghei';font-size:36px;}
-.chat-group{padding-bottom:7px;border-bottom:1px solid #eee;}
+.chat-group{padding-bottom:10px;border-bottom:1px solid #eee;}
 .chat-group dt{padding-bottom:10px;padding-top:15px;}
 .chat-group dd{padding-bottom:8px;}
 .chat-group dd a{display:block;height:30px;line-height:29px;-webkit-transition:all 0.3s;}
@@ -51,4 +51,9 @@ input:-moz-placeholder { color: #ccc; }
 .user-group dd .status-idle img{}
 .user-group dd .status-leave img{border:2px solid #999;}
 .chat-content{}
-
+.user-card{padding:20px 0;border-bottom:1px solid #eee}
+.user-card .user-card-head{padding-bottom:10px}
+.user-card .user-card-body{position:relative;padding-left:60px;height:50px;}
+.user-card .user-face{display:block;width:50px;height:50px;position:absolute;left:0;top:0;}
+.user-card .user-name{display:inline-block;line-height:49px;}
+.user-card .user-card-body a{color:#337ab7;}

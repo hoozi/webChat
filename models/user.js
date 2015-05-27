@@ -7,11 +7,15 @@
  */
 var mongoose = require('mongoose')
    ,Schema = mongoose.Schema;
+var friendSchema = new Schema({
+	id: Schema.Types.ObjectId,
+	userName: String
+});
 
 var userSchema = new Schema({
 	userName: String,
 	passWord: String,
-	friends:[{userName:String,id:String}]
+	friends:[friendSchema]
 })
 
 mongoose.model('user', userSchema);

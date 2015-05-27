@@ -16,7 +16,7 @@
  * @param {Function} cb 回调函数
  */
  exports.getUserByName = function(name, cb) {
- 	User.findOne({'name': name}, cb);
+ 	User.findOne({userName: name}, cb);
  }
 
  /**

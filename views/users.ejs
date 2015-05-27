@@ -3,10 +3,24 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<title>Document</title>
+	<title>在线用户</title>
 	<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
 </head>
 <body>
+<div class="panel panel-primary">
+	<div class="panel-heading">
+        <h3 class="panel-title">在线的小伙伴</h3>
+    </div>
+    <div class="panel-body">
+    	<div class="list-group">
+			<% if(users) {%>
+			  <a href="/user/add/<%= user._id %>" class="list-group-item"><%= user.userName %></a>
+			<%}else{%>
+			  <a href="/" class="list-group-item list-group-item-danger">:( 一个也没有，返回首页</a>
+			<%}%>
+		</div>
+    </div>
 	
+</div>
 </body>
 </html>

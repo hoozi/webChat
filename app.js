@@ -5,9 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var mongoStroe = require('connect-mongo')(session)
 var chat = require('./routes/index');
 var user = require('./routes/user');
-
 var app = express();
 
 // view engine setup
@@ -22,6 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser("hoozi_chat"));
 app.use(session({
   secret:"hoozi_chat",
+  store: new mongoStroe({
+    url:"mongodb://localhost/data"
+  }),
   resave: true,
   saveUninitialized: true
 }))
@@ -43,6 +46,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log("1here!")
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -54,6 +58,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  console.log("2here!")
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,

@@ -9,13 +9,16 @@ var mongoose = require('mongoose')
    ,Schema = mongoose.Schema;
 var friendSchema = new Schema({
 	id: Schema.Types.ObjectId,
+	online: {type:Number, default:0},
 	userName: String
 });
 
 var userSchema = new Schema({
+	for_id: String,
 	userName: String,
 	passWord: String,
 	friends:[friendSchema]
 })
+userSchema.index({userName:1});
 
 mongoose.model('user', userSchema);

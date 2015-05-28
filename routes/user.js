@@ -2,12 +2,13 @@ var express = require('express');
 var router = express.Router();
 var controllers = require('../controllers');
 var tools = require('../tools');
-//var Session = require('../models').session
 /* GET users listing. */
-router.get('/user/online', function(req, res) {
-	/*Session.find(function(err, user){
-		console.log(user.userName);
-	})*/
+router.get('/list', tools.holder, controllers.user_list)
+
+.get('/add/:id/:user_name', controllers.add_user)
+.get('/online/:id/:since', function(req, res) {
+	global.users[req.params['id']]=req.params['since'];
+	res.json({'status':1})
 })
 
 //用户注册

@@ -30,6 +30,21 @@
  exports.getUserById = function(id, cb) {
  	User.findById(id, cb);
  }
+
+  /**
+ * 获取所有的用户
+ * Callback:
+ * - err, 数据库异常
+ * - users, 用户列表
+ * @param {Function} cb 回调函数
+ */
+ exports.getUsers = function(query, cb) {
+ 	if(typeof(query)=='function') {
+ 		cb = query;
+ 		query = {};
+ 	}
+ 	User.find(query, cb);
+ }
  
  /**
  * 添加用户

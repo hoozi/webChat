@@ -3,18 +3,23 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<title>在线用户</title>
+	<title>用户列表</title>
 	<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+	<style>
+		.color{color:#337ab7;}
+	</style>
 </head>
 <body>
 <div class="panel panel-primary">
 	<div class="panel-heading">
-        <h3 class="panel-title">在线的小伙伴</h3>
+        <h3 class="panel-title">小伙伴们</h3>
     </div>
     <div class="panel-body">
     	<div class="list-group">
 			<% if(users) {%>
-			  <a href="/user/add/<%= user._id %>" class="list-group-item"><%= user.userName %></a>
+			  <% users.forEach(function(user){%>
+			  	<a href="/user/add/<%= user._id %>/<%= user.userName %>" class="list-group-item">添加<b class="color"><%= user.userName %></b>为好友</a>
+			  <%})%>
 			<%}else{%>
 			  <a href="/" class="list-group-item list-group-item-danger">:( 一个也没有，返回首页</a>
 			<%}%>

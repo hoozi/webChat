@@ -1,3 +1,4 @@
+var http = require('http');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -9,7 +10,7 @@ var mongoStroe = require('connect-mongo')(session)
 var chat = require('./routes/index');
 var user = require('./routes/user');
 var app = express();
-
+global.users = {};
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,7 +24,9 @@ app.use(cookieParser("hoozi_chat"));
 app.use(session({
   secret:"hoozi_chat",
   store: new mongoStroe({
-    url:"mongodb://localhost/data"
+    url:"mongodb://localhost/data",
+    autoRemove: 'interval',
+    autoRemoveInterval: 1 // In minutes. Default
   }),
   resave: true,
   saveUninitialized: true
@@ -67,4 +70,21 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+var server = http.createServer(app);
+var io = require('socket.io')(server);
+var User = require('./query').user;
+var user = {};
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('add', function (from) {
+    user[from] = socket;
+  });
+  socket.on('tomessage', function(from, to, msg) {
+    if(to in user) {
+      user[to].emit('to'+to,'来自'+from+'to'+msg);
+    }
+  })
+});
+
+server.listen(3000);
+

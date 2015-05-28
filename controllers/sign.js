@@ -42,7 +42,10 @@ exports.signin = function(req, res) {
              bcrypt.bCompare(pass, user.passWord, function(err, passed){
                 if(passed) {
                     _gen_session(user, res);
-                    req.session.user = user;
+                    req.session.user = {
+                        _id: user._id,
+                        userName: user.userName
+                    };
                     res.redirect('/');
                 } else {
                     res.render('signin', {err:"用户名或密码错误！"});

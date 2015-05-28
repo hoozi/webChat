@@ -46,7 +46,7 @@ input:-moz-placeholder { color: #ccc; }
 .chat-group dd .status-idle:hover{color:#008e00;}
 .chat-group dd .status-idle:hover img{border-color:#5cb85c;}
 .chat-group .chat-status{}
-.user-group dd a{position:relative;padding-left:40px;}
+.user-group dd a{position:relative;/*padding-left:40px;*/}
 .user-group dd a img{display:block;width:30px;height:30px;position:absolute;left:0;top:0;border-radius:50%;border:2px solid #fff;-webkit-transition:all 0.3s;}
 .user-group dd .status-idle img{}
 .user-group dd .status-leave img{border:2px solid #999;}
@@ -57,3 +57,6 @@ input:-moz-placeholder { color: #ccc; }
 .user-card .user-face{display:block;width:50px;height:50px;position:absolute;left:0;top:0;}
 .user-card .user-name{display:inline-block;line-height:49px;}
 .user-card .user-card-body a{color:#337ab7;}
+.user-group .no-data a{display:block;padding:0;background-color:#d9534f;border-radius:4px;color:#fff;text-align:center;}
+.user-group .no-data a:hover{background-color:#c9302c;color:#fff;}
+.chat-count{padding:1px 5px;border-radius:10px;background-color:#d9534f;color:#fff;}

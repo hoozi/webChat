@@ -5,6 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 	<title>chat</title>
 	<link rel="stylesheet" href="/css/style.css">
+	<script src="/jquery/jquery.min.js"></script>
 </head>
 <body>
 <div class="chat-container fullh">
@@ -19,16 +20,30 @@
 				<a href="/user/signout">退出</a>
 			</div>
 		</div>
+		<script>
+		var from = "<%= user._id %>";
+		function online() {
+			var now = new Date().getTime();
+			var xhr = $.ajax({
+				url: '/user/online/<%= user._id %>/'+now,
+				type: 'GET'
+			});
+			setTimeout(online,40000)
+		}
+		online();
+		</script>
 		<% }else { %>
 		<h1 class="logo">Web Chat</h1>
 		<%}%>
 		<dl class="chat-group user-group">
-			<dt><b>好友列表</b></dt>
-			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
-			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
-			<dd class="clearfix"><a class="chat-to status-leave fl" href="#"><img src="https://avatars2.githubusercontent.com/u/36107?v=3&s=40" alt="">user1</a></dd>
-			<dd class="clearfix"><a class="chat-to status-idle fl" href="#"><img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt=""> 用户名很长呢</a></dd>
-			<dd class="clearfix"><a class="chat-to status-leave fl" href="#"><img src="" alt="">user1</a></dd>
+			<dt class="clearfix"><b class="fl">好友列表</b><a href="/user/list" class="fr">+添加好友</a></dt>
+			<% if(user.friends.length) {%>
+			<%user.friends.forEach(function(friend){%>
+			<dd class="clearfix"><a class="chat-to u-chat-to <%if(!friend['online']){%>status-leave<%}else{%>status-idle<%}%> fl" href="javascript:;" chat-id="<%= friend.id %>"><!--<img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt="">--> <%= friend.userName %></a><span class="chat-count fr">12</span></dd>
+			<%})%>
+			<% } else { %>
+				<dd class="no-data"><a href="/user/list">暂无好友，点击添加</a></dd>
+			<% } %>
 		</dl>
 		<dl class="chat-group">
 			<dt><b>房间列表</b></dt>
@@ -43,5 +58,19 @@
 		</div>
 	</div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket = io.connect('http://localhost:3000');
+	socket.on('connect', function(){
+		$('.u-chat-to').on('click', function(){
+			var to = $(this).attr('chat-id');
+			socket.emit('tomessage',from,to,"hhehehe");
+		});
+		socket.emit('add', from);
+		socket.on('to'+from,function(data) {
+			alert(data)
+		})
+	})
+</script>
 </body>
 </html>

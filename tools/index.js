@@ -7,3 +7,4 @@
  */
 exports.bcrypt = require('./crypt');
 exports.validator = require('./validator');
+exports.holder = require('./holder');

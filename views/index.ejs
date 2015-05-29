@@ -21,12 +21,13 @@
 			</div>
 		</div>
 		<script>
-		var from = "<%= user._id %>";
+		var my = "<%= user._id %>";
+		var my_name = "<%= user.userName %>"
 		function online() {
 			var now = new Date().getTime();
 			var xhr = $.ajax({
-				url: '/user/online/<%= user._id %>/'+now,
-				type: 'GET'
+				url: "/user/online/<%= user._id %>/"+now,
+				type: "GET"
 			});
 			setTimeout(online,40000)
 		}
@@ -39,7 +40,7 @@
 			<dt class="clearfix"><b class="fl">好友列表</b><a href="/user/list" class="fr">+添加好友</a></dt>
 			<% if(user.friends.length) {%>
 			<%user.friends.forEach(function(friend){%>
-			<dd class="clearfix"><a class="chat-to u-chat-to <%if(!friend['online']){%>status-leave<%}else{%>status-idle<%}%> fl" href="javascript:;" chat-id="<%= friend.id %>"><!--<img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt="">--> <%= friend.userName %></a><span class="chat-count fr">12</span></dd>
+			<dd class="clearfix"><a class="chat-to u-chat-to <%if(!friend["online"]){%>status-leave<%}else{%>status-idle<%}%> fl" href="javascript:;" chat-id="<%= friend.id %>"><!--<img src="https://avatars2.githubusercontent.com/u/2281961?v=3&s=40" alt="">--> @<%= friend.userName %></a><span class="chat-count fr">12</span></dd>
 			<%})%>
 			<% } else { %>
 				<dd class="no-data"><a href="/user/list">暂无好友，点击添加</a></dd>
@@ -52,24 +53,85 @@
 	</div>
 	<div class="chat-content fullwh">
 		<div class="chat-content-inner p20">
-			<p>111</p>
-			<p>111</p>
-			<p>111</p>
+			<div class="send-area" id="send-area">
+				@:<b id="to"></b>
+				<div class="message-area" id="message-area"></div>
+				<textarea name="" cols="30" rows="10" class="message" id="message"></textarea>
+				<input type="button" value="发送" class="send" id="send">
+			</div>
 		</div>
 	</div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/moment/moment.js"></script>
 <script>
-	var socket = io.connect('http://localhost:3000');
-	socket.on('connect', function(){
-		$('.u-chat-to').on('click', function(){
-			var to = $(this).attr('chat-id');
-			socket.emit('tomessage',from,to,"hhehehe");
+	var socket = io.connect("http://localhost:3000");
+	var date = new Date().getTime();
+	var message = $("#message");
+	var message_area = $("#message-area");
+	var send = $("#send");
+	var tmpl1 = "<p class='my'>{name}({date})<br/>{message}</p>";
+	var tmpl2 = "<p class='other'>{name}({date})<br/>{message}</p>";
+	var template = function(temp, data) {
+		for(var k in data) {
+			var temp = temp.replace(new RegExp("\\{"+k+"\\}","g"), data[k])
+		}
+		return temp;
+	}
+	socket.on("connect", function(){
+		var to = ""
+		$(".u-chat-to").on("click", function(){
+		 	message_area.html();
+			to = $(this).attr("chat-id");
+			$("#to").text(to);
+			socket.emit("create room", my, to);
 		});
-		socket.emit('add', from);
-		socket.on('to'+from,function(data) {
-			alert(data)
+		socket.emit("add", my);
+		socket.on("to"+my,function(data) {
+			if($("#m"+data.from_id).length) {
+				$("#m"+data.from_id).append(template(tmpl2, {
+					name:data.from_name,
+					date:data.from_date,
+					message:data.from_message
+				}))
+			} else {
+				message_area.html("<div id='m"+data.from_id+"'></div>")
+				$("#m"+data.from_id).append(template(tmpl2, {
+					name:data.from_name,
+					date:data.from_date,
+					message:data.from_message
+				}))
+			}
+			to = data.from_id;
+			$("#to").text(to);
+		});
+		$("#send").on("click", function(){
+			if(!to) return alert("请选择好友！");
+			var date = moment().format("YYYY-MM-DD HH:mm:ss");
+			if($("#m"+to).length) {
+				$("#m"+to).append(template(tmpl1, {
+					name:"我",
+					date:date,
+					message:message.val()
+				}))
+			} else {
+				message_area.html("<div id='m"+to+"'></div>")
+				$("#m"+to).append(template(tmpl1, {
+					name:"我",
+					date:date,
+					message:message.val()
+				}))
+			}
+			socket.emit("to message",{
+				from_id:my,
+				from:my_name,
+				to:to,
+				date:date,
+				msg:message.val()
+			});
+			message.val("")
 		})
+
 	})
 </script>
 </body>

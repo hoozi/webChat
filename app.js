@@ -6,7 +6,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var mongoStroe = require('connect-mongo')(session)
+var mongoStroe = require('connect-mongo')(session);
+var moment = require('moment');
 var chat = require('./routes/index');
 var user = require('./routes/user');
 var app = express();
@@ -49,7 +50,6 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
-    console.log("1here!")
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -61,7 +61,6 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  console.log("2here!")
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
@@ -75,15 +74,26 @@ var io = require('socket.io')(server);
 var User = require('./query').user;
 var user = {};
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+
   socket.on('add', function (from) {
-    user[from] = socket;
+    user[from] = socket
   });
-  socket.on('tomessage', function(from, to, msg) {
-    if(to in user) {
-      user[to].emit('to'+to,'来自'+from+'to'+msg);
+  socket.on('create room', function(from, to) {
+    if(from in user) {
+      user[from].join(to);
     }
-  })
+  });
+  socket.on('to message', function(message) {
+    if(message.to in user) {
+      user[message.to].join(message.to);
+      socket.to(message.to).emit('to'+message.to,{
+        from_id: message.from_id,
+        from_name: message.from,
+        from_date: message.date,
+        from_message: message.msg
+      });
+    }
+  });
 });
 
 server.listen(3000);

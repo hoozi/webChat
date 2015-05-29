@@ -60,3 +60,5 @@ input:-moz-placeholder { color: #ccc; }
 .user-group .no-data a{display:block;padding:0;background-color:#d9534f;border-radius:4px;color:#fff;text-align:center;}
 .user-group .no-data a:hover{background-color:#c9302c;color:#fff;}
 .chat-count{padding:1px 5px;border-radius:10px;background-color:#d9534f;color:#fff;}
+.my{color:#00803e;}
+.other{color:#0000fb;}
